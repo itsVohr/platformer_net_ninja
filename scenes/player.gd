@@ -4,6 +4,7 @@ var direction_x := 0.0
 var facing_right = true
 @export var speed = 150
 var can_shoot := true
+var can_double_jump := true
 var has_gun := false
 var health := 100
 var vulnerable: = true
@@ -12,7 +13,8 @@ signal shoot(pos: Vector2)
 
 func _ready():
 	$Timers/FireTimer.timeout.connect(_on_fire_timer_timeout)
-	$Timers/InvulnerabilityTimer.timeout.connect(_on_invulnerability_timer_timeout)
+	$Timers/CooldownTimer.timeout.connect(func(): can_shoot = true)
+	$Timers/InvulnerabilityTimer.timeout.connect(func(): vulnerable = true)
 	add_to_group("Player")
 
 func _process(_delta):
@@ -20,6 +22,8 @@ func _process(_delta):
 	apply_gravity()
 	get_animation()
 	get_facing_direction()
+	if is_on_floor():
+		can_double_jump = true
 	
 	velocity.x = direction_x * speed
 	move_and_slide()
@@ -27,9 +31,12 @@ func _process(_delta):
 
 func get_input():
 	direction_x = Input.get_axis("left", "right")
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or can_double_jump):
 		velocity.y = -300
 		$Sounds/JumpSound.play()
+		if not is_on_floor():
+			can_double_jump = false
+			$Timers/JumpCooldown
 	if Input.is_action_just_pressed("shoot") and can_shoot and has_gun:
 		shoot.emit(global_position, facing_right)
 		can_shoot = false
@@ -41,15 +48,9 @@ func get_input():
 func apply_gravity():
 	velocity.y += 20
 
-func _on_shoot_cooldown_timeout():
-	can_shoot = true
-
 func _on_fire_timer_timeout():
 	for child in $Fire.get_children():
 		child.hide()
-		
-func _on_invulnerability_timer_timeout():
-	vulnerable = true
 
 func get_facing_direction():
 	if direction_x != 0:
