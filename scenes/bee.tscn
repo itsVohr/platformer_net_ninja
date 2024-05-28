@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://cobylvrpyahji"]
+
+[ext_resource type="Script" path="res://scenes/bee.gd" id="1_d3x5x"]
+[ext_resource type="Shader" path="res://scenes/flicker.gdshader" id="1_j7qkr"]
+[ext_resource type="Texture2D" uid="uid://d3d3lb4jabjit" path="res://assets/graphics/Enemies/bee/0.png" id="1_s6pvp"]
+[ext_resource type="Texture2D" uid="uid://6wcmid4itund" path="res://assets/graphics/Enemies/bee/1.png" id="3_dt1yx"]
+[ext_resource type="AudioStream" uid="uid://dss3xqj8u01mj" path="res://assets/audio/shot_01.ogg" id="5_fpg0j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_52ufg"]
+resource_local_to_scene = true
+shader = ExtResource("1_j7qkr")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/amount = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_so6qb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_s6pvp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dt1yx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d24qt"]
+radius = 3.0
+height = 10.0
+
+[node name="Bee" type="Area2D"]
+collision_layer = 4
+collision_mask = 19
+script = ExtResource("1_d3x5x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_52ufg")
+sprite_frames = SubResource("SpriteFrames_so6qb")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_d24qt")
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_fpg0j")

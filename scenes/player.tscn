@@ -1,0 +1,137 @@
+[gd_scene load_steps=14 format=3 uid="uid://dtga65g7pja6w"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_dqfr3"]
+[ext_resource type="Shader" path="res://scenes/flicker.gdshader" id="2_odyj0"]
+[ext_resource type="Texture2D" uid="uid://dvqsvvkyjlu0g" path="res://assets/graphics/player/basic/idle.png" id="2_yfiev"]
+[ext_resource type="Texture2D" uid="uid://cvnnsog36d3r4" path="res://assets/graphics/player/gun/idle.png" id="3_drems"]
+[ext_resource type="Texture2D" uid="uid://b0u7kgn3m0uc8" path="res://assets/graphics/player/basic/walk.png" id="3_s8cp1"]
+[ext_resource type="Texture2D" uid="uid://m0f4vgp07s64" path="res://assets/graphics/player/gun/walk.png" id="5_2sybr"]
+[ext_resource type="Texture2D" uid="uid://d2gqrve28ujpx" path="res://assets/graphics/bullet/fire.png" id="6_mojdp"]
+[ext_resource type="AudioStream" uid="uid://cs6hxurlas2y2" path="res://assets/audio/synth_laser_03.ogg" id="8_7msiu"]
+[ext_resource type="AudioStream" uid="uid://ddlm23eg5ytxy" path="res://assets/audio/jump.mp3" id="9_cu4ua"]
+[ext_resource type="AudioStream" uid="uid://dss3xqj8u01mj" path="res://assets/audio/shot_01.ogg" id="10_h4603"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8qwag"]
+radius = 4.0
+height = 14.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ifcdt"]
+resource_local_to_scene = true
+shader = ExtResource("2_odyj0")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/amount = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mgicl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yfiev")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_drems")
+}],
+"loop": true,
+"name": &"idle_gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_s8cp1")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_2sybr")
+}],
+"loop": true,
+"name": &"jump_gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yfiev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_s8cp1")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_drems")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_2sybr")
+}],
+"loop": true,
+"name": &"walk_gun",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_dqfr3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_8qwag")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="CooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.4
+one_shot = true
+
+[node name="FireTimer" type="Timer" parent="Timers"]
+wait_time = 0.1
+
+[node name="InvulnerabilityTimer" type="Timer" parent="Timers"]
+wait_time = 0.6
+one_shot = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_ifcdt")
+sprite_frames = SubResource("SpriteFrames_mgicl")
+animation = &"idle_gun"
+autoplay = "walk"
+
+[node name="Fire" type="Node2D" parent="."]
+
+[node name="FireLeft" type="Sprite2D" parent="Fire"]
+visible = false
+position = Vector2(-10, 2)
+texture = ExtResource("6_mojdp")
+flip_h = true
+
+[node name="FireRight" type="Sprite2D" parent="Fire"]
+visible = false
+position = Vector2(10, 2)
+texture = ExtResource("6_mojdp")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="FireSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("8_7msiu")
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("9_cu4ua")
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("10_h4603")
+
+[connection signal="timeout" from="Timers/CooldownTimer" to="." method="_on_shoot_cooldown_timeout"]

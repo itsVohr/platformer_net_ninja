@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxg58n223qch2"]
+
+[ext_resource type="Script" path="res://scenes/gun.gd" id="1_1tpba"]
+[ext_resource type="Texture2D" uid="uid://c8yg32322wk0f" path="res://assets/graphics/player/gun/gun.png" id="1_f13xb"]
+[ext_resource type="AudioStream" uid="uid://dtyhle7egknx1" path="res://assets/audio/power_up_01.ogg" id="3_y3n8v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uksht"]
+size = Vector2(10, 6)
+
+[node name="Gun" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_1tpba")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_f13xb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uksht")
+
+[node name="PowerUpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_y3n8v")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
