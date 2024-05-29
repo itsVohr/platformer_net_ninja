@@ -8,6 +8,7 @@ var can_double_jump := true
 var has_gun := false
 var health := 100
 var vulnerable: = true
+var bullet_offset = 16
 
 signal shoot(pos: Vector2)
 signal player_died

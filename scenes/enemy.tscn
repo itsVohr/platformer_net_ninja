@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj1o2dh1qat0d"]
+
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_qq1cx"]
+[ext_resource type="AudioStream" uid="uid://dss3xqj8u01mj" path="res://assets/audio/shot_01.ogg" id="2_ic2sd"]
+[ext_resource type="Shader" path="res://scenes/flicker.gdshader" id="3_efamd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wa4a3"]
+shader = ExtResource("3_efamd")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/amount = 0.0
+
+[node name="Enemy" type="Area2D"]
+script = ExtResource("1_qq1cx")
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ic2sd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_wa4a3")
