@@ -1,3 +1,4 @@
 extends Node
 
-var game_status
+var game_status : String
+var enemies_remanining : int

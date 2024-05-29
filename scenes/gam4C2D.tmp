@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3ybrfj2qbmsl"]
+[gd_scene load_steps=5 format=3 uid="uid://d3ybrfj2qbmsl"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_b2s2m"]
 [ext_resource type="PackedScene" uid="uid://ba7ab1bn7p68e" path="res://scenes/level.tscn" id="1_srehf"]
+[ext_resource type="PackedScene" uid="uid://cocpj8n3gufrt" path="res://scenes/ui.tscn" id="2_bg6iq"]
 [ext_resource type="AudioStream" uid="uid://dssjwtv1mqok2" path="res://assets/audio/bg_music.ogg" id="3_q00x3"]
 
 [node name="Game" type="Node"]
@@ -19,6 +20,8 @@ grow_vertical = 2
 color = Color(0.988235, 0.87451, 0.803922, 1)
 
 [node name="Level" parent="." instance=ExtResource("1_srehf")]
+
+[node name="UI" parent="." instance=ExtResource("2_bg6iq")]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_q00x3")

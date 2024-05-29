@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ba7ab1bn7p68e"]
+[gd_scene load_steps=13 format=3 uid="uid://ba7ab1bn7p68e"]
 
 [ext_resource type="Texture2D" uid="uid://dln1mtdvwq3le" path="res://assets/graphics/level/tilesets/level_tilemap.png" id="1_3lfi1"]
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_hcjr0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://87531y6uu4th" path="res://scenes/worm.tscn" id="5_khf4t"]
 [ext_resource type="PackedScene" uid="uid://dxg58n223qch2" path="res://scenes/gun.tscn" id="5_wx65c"]
 [ext_resource type="Texture2D" uid="uid://l5y6mpl00cbd" path="res://assets/graphics/level/tilesets/decoration_tilemap.png" id="7_ynarg"]
+[ext_resource type="PackedScene" uid="uid://cocpj8n3gufrt" path="res://scenes/ui.tscn" id="8_gtbh5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jaell"]
 texture = ExtResource("1_3lfi1")
@@ -171,5 +172,7 @@ position = Vector2(695, 39)
 
 [node name="Marker2D2" type="Marker2D" parent="BeePathPoints"]
 position = Vector2(859, 37)
+
+[node name="UI" parent="." instance=ExtResource("8_gtbh5")]
 
 [connection signal="shoot" from="Player" to="." method="_on_player_shoot"]

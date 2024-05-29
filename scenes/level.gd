@@ -7,6 +7,8 @@ const bullet_scene := preload("res://scenes/bullet.tscn")
 
 func _ready():
 	$Player.player_died.connect(_on_player_died)
+	GameState.enemies_remanining = get_tree().get_nodes_in_group("enemies").size()
+	update_enemy_counter()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.enemy_died.connect(_on_enemy_died)
 
@@ -23,11 +25,14 @@ func _on_player_died():
 	call_deferred("game_over")
 	
 func _on_enemy_died():
-	var remaining_enemies := get_tree().get_nodes_in_group("enemies").size()
-	# If only one node is left, that's the base "Enemy" class and not an instance of any enemy
-	if remaining_enemies == 1:
+	GameState.enemies_remanining -= 1
+	update_enemy_counter()
+	if GameState.enemies_remanining == 0:
 		GameState.game_status = "won"
 		call_deferred("game_over")
 	
 func game_over():
 	get_tree().change_scene_to_packed(game_over_scene)
+
+func update_enemy_counter():
+	$UI/MarginContainer/EnemyCounter.text = "ENEMIES REMAINING: " + str(GameState.enemies_remanining)
