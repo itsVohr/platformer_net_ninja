@@ -19,4 +19,5 @@ func _on_player_died():
 	call_deferred("game_over")
 	
 func game_over():
+	GameState.game_status = "lost"
 	get_tree().change_scene_to_packed(game_over_scene)
