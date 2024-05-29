@@ -4,6 +4,9 @@ extends Control
 func _ready():
 	if GameState.game_status == "lost":
 		$VBoxContainer/GameOver.text = "GAME OVER!"
+	if GameState.game_status == "won":
+		$VBoxContainer/GameOver.text = "YOU WON!"
+		$VBoxContainer/NiceTry.text = "god gamer"
 
 func _input(_event):
 	if Input.is_action_just_pressed("jump"):

@@ -154,6 +154,9 @@ marker2 = NodePath("../../BeePathPoints/Marker2D2")
 [node name="Worm" parent="Enemies" instance=ExtResource("5_khf4t")]
 position = Vector2(511, 43)
 
+[node name="Worm2" parent="Enemies" instance=ExtResource("5_khf4t")]
+position = Vector2(399, 12)
+
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="Guns" type="Node2D" parent="."]

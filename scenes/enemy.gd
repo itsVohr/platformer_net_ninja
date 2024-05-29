@@ -5,9 +5,12 @@ var damage := 0
 var health := 0
 var speed := 0
 
+signal enemy_died
+
 func _ready():
 	area_entered.connect(_on_area_entered)
 	body_entered.connect(_on_body_entered)
+	add_to_group("enemies")
 
 func _on_body_entered(body):
 	if 'get_damage' in body:
@@ -15,6 +18,7 @@ func _on_body_entered(body):
 
 func check_health():
 	if health <= 0:
+		enemy_died.emit()
 		await $DamageSound.finished
 		queue_free()
 
