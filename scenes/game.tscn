@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://dssjwtv1mqok2" path="res://assets/audio/bg_music.ogg" id="3_q00x3"]
 
 [node name="Game" type="Node"]
+process_mode = 3
 script = ExtResource("1_b2s2m")
 
 [node name="BG" type="CanvasLayer" parent="."]
@@ -24,3 +25,12 @@ color = Color(0.988235, 0.87451, 0.803922, 1)
 stream = ExtResource("3_q00x3")
 volume_db = -14.149
 autoplay = true
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="PauseBG" type="ColorRect" parent="PauseMenu"]
+modulate = Color(1, 1, 1, 0.560784)
+offset_right = 1156.0
+offset_bottom = 655.0
+color = Color(0.223103, 0.223103, 0.223103, 1)

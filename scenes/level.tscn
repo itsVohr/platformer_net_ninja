@@ -130,6 +130,7 @@ texture = ExtResource("7_ynarg")
 sources/0 = SubResource("TileSetAtlasSource_5isih")
 
 [node name="Level" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_hcjr0")
 
 [node name="Terrain" type="TileMap" parent="."]
