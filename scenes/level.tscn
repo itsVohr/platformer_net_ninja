@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ba7ab1bn7p68e"]
+[gd_scene load_steps=14 format=3 uid="uid://ba7ab1bn7p68e"]
 
 [ext_resource type="Texture2D" uid="uid://dln1mtdvwq3le" path="res://assets/graphics/level/tilesets/level_tilemap.png" id="1_3lfi1"]
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_hcjr0"]
@@ -133,6 +133,9 @@ texture = ExtResource("7_ynarg")
 [sub_resource type="TileSet" id="TileSet_cfdmq"]
 sources/0 = SubResource("TileSetAtlasSource_5isih")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4xg2"]
+size = Vector2(1198, 20)
+
 [node name="Level" type="Node2D"]
 process_mode = 1
 script = ExtResource("1_hcjr0")
@@ -178,5 +181,14 @@ position = Vector2(522, 593)
 position = Vector2(342, 503)
 
 [node name="UI" parent="." instance=ExtResource("8_gtbh5")]
+
+[node name="DeathArea" type="Area2D" parent="."]
+position = Vector2(-5, 731)
+collision_layer = 4
+collision_mask = 2
+
+[node name="DeathAreaCollision" type="CollisionShape2D" parent="DeathArea"]
+position = Vector2(602, -25)
+shape = SubResource("RectangleShape2D_i4xg2")
 
 [connection signal="shoot" from="Player" to="." method="_on_player_shoot"]

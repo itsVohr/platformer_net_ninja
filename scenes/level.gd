@@ -7,6 +7,7 @@ const bullet_scene := preload("res://scenes/bullet.tscn")
 
 func _ready():
 	$Player.player_died.connect(_on_player_died)
+	$DeathArea.body_entered.connect(_on_body_entered)
 	GameState.enemies_remanining = get_tree().get_nodes_in_group("enemies").size()
 	update_enemy_counter()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -19,6 +20,10 @@ func _on_player_shoot(pos: Vector2, facing_right: bool):
 	bullet.position = pos + Vector2(direction * 8, 2)
 	bullet.direction = direction
 	$Bullets.add_child(bullet)
+	
+func _on_body_entered(body):
+	if 'get_damage' in body:
+		_on_player_died()
 
 func _on_player_died():
 	GameState.game_status = "lost"
