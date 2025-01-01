@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3ybrfj2qbmsl"]
+[gd_scene load_steps=8 format=3 uid="uid://d3ybrfj2qbmsl"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_b2s2m"]
 [ext_resource type="PackedScene" uid="uid://ba7ab1bn7p68e" path="res://scenes/level.tscn" id="1_srehf"]
 [ext_resource type="AudioStream" uid="uid://dssjwtv1mqok2" path="res://assets/audio/bg_music.ogg" id="3_q00x3"]
 [ext_resource type="PackedScene" uid="uid://byw6gu51ff446" path="res://scenes/pause_menu.tscn" id="4_n4eom"]
+[ext_resource type="Shader" path="res://scenes/screen_effect.gdshader" id="5_r5j20"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yq8lu"]
+shader = ExtResource("5_r5j20")
+
+[sub_resource type="QuadMesh" id="QuadMesh_3idgr"]
+size = Vector2(1280, 720)
+center_offset = Vector3(640, 360, 0)
 
 [node name="Game" type="Node"]
 process_mode = 3
@@ -28,3 +36,9 @@ volume_db = -10.0
 autoplay = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("4_n4eom")]
+
+[node name="SpecialEffects" type="CanvasLayer" parent="."]
+
+[node name="CRTEffect" type="MeshInstance2D" parent="SpecialEffects"]
+material = SubResource("ShaderMaterial_yq8lu")
+mesh = SubResource("QuadMesh_3idgr")

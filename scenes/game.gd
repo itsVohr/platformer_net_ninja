@@ -8,8 +8,9 @@ const CONFIG_FILE_PATH = "user://godot_test_config.cfg"
 func _ready():
 	_load_data()
 	$Music.finished.connect(_on_music_finished)
-	$PauseMenu/CenterContainer/GridContainer/VolumeSlider.value_changed.connect(_on_volume_changed)
-	$PauseMenu/CenterContainer/GridContainer/VolumeSlider.value = db_to_linear($Music.volume_db)
+	$PauseMenu/CenterContainer/VBoxContainer/GridContainer/VolumeSlider.value_changed.connect(_on_volume_changed)
+	$PauseMenu/CenterContainer/VBoxContainer/GridContainer/VolumeSlider.value = db_to_linear($Music.volume_db)
+	$PauseMenu/CenterContainer/VBoxContainer/CheckButton.toggled.connect(func(_x): $SpecialEffects/CRTEffect.visible = !$SpecialEffects/CRTEffect.visible)
 	$PauseMenu.visible = false
 	GameState.game_status = "playing"
 
@@ -18,7 +19,7 @@ func _notification(what):
 		# Save the volume to a file before the game closes
 		if volume_has_changed:
 			_save_data(db_to_linear($Music.volume_db))
-		get_tree().quit()	
+		get_tree().quit()
 
 func _input(_event):
 	if Input.is_action_just_pressed("pause"):
